@@ -36,16 +36,12 @@ class CreateUsersTable extends Migration
                 'null' => true,
             ],
         ]);
-
-        // Set primary key
         $this->forge->addKey('id', true);
-        // Create the table
         $this->forge->createTable('users');
     }
 
     public function down()
     {
-        // Drop the table if it exists
         $this->forge->dropTable('users');
     }
 }
