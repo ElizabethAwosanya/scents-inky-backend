@@ -8,8 +8,16 @@ use CodeIgniter\Router\RouteCollection;
 
 $routes->get('/', 'Home::index');
 
-$routes->get('/products', 'ProductsController::index');
-$routes->get('/products/(:num)', 'ProductsController::show/$1');
-$routes->post('/products', 'ProductsController::create');
-$routes->put('/products/(:num)', 'ProductsController::update/$1');
-$routes->delete('/products/(:num)', 'ProductsController::delete/$1');
+$routes->group('api', function ($routes) {
+    $routes->get('products', 'ProductsController::index');
+    $routes->get('products/(:num)', 'ProductsController::show/$1');
+    $routes->post('products', 'ProductsController::create');
+    $routes->post('products/(:num)', 'ProductsController::update/$1');
+    $routes->delete('products/(:num)', 'ProductsController::delete/$1');
+    $routes->options('products', 'ProductsController::optionsHandler');
+    $routes->options('products/(:any)', 'ProductsController::optionsHandler');
+
+    $routes->post('test-upload', 'ProductsController::testUpload');
+
+
+});
