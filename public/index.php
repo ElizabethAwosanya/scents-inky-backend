@@ -15,6 +15,10 @@ if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
     );
 
     header('HTTP/1.1 503 Service Unavailable.', true, 503);
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+    header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
     echo $message;
 
     exit(1);
