@@ -44,7 +44,7 @@ class ProductsController extends ResourceController
         $file = $this->request->getFile('image');
         if ($file && $file->isValid()) {
             $imageName = $file->getRandomName();
-            $file->move(WRITEPATH . 'uploads', $imageName);
+            $file->move(FCPATH . 'uploads', $imageName); // Move file to 'uploads' folder in the public directory
             $data['image'] = $imageName;
         }
 
@@ -64,13 +64,13 @@ class ProductsController extends ResourceController
         $file = $this->request->getFile('image');
         if ($file && $file->isValid()) {
             $imageName = $file->getRandomName();
-            $file->move(WRITEPATH . 'uploads', $imageName);
+            $file->move(FCPATH . 'uploads', $imageName); // Save in 'uploads' folder
             $data['image'] = $imageName;
 
-            // Optional: delete old image file if needed
+            // Delete old image file if it exists
             $existingProduct = $this->model->find($id);
             if ($existingProduct && $existingProduct['image']) {
-                $oldImage = WRITEPATH . 'uploads/' . $existingProduct['image'];
+                $oldImage = FCPATH . 'uploads/' . $existingProduct['image'];
                 if (is_file($oldImage)) {
                     unlink($oldImage);
                 }
@@ -95,9 +95,9 @@ class ProductsController extends ResourceController
             return $this->failNotFound('Product not found');
         }
 
-        // Optional: delete the associated image file
+        // Delete the associated image file if it exists
         if ($product['image']) {
-            $imagePath = WRITEPATH . 'uploads/' . $product['image'];
+            $imagePath = FCPATH . 'uploads/' . $product['image'];
             if (is_file($imagePath)) {
                 unlink($imagePath);
             }
